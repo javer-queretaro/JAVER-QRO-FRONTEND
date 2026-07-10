@@ -1,3 +1,8 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 :root {
   --brand-primary: #cd1019;
   --brand-primary-strong: #cd1019;
@@ -190,7 +195,9 @@ a {
 
 .hero-form .field input[type="text"],
 .hero-form .field input[type="email"],
-.hero-form .field input[type="tel"] {
+.hero-form .field input[type="tel"],
+select#hero-zona,
+select#hero-fraccionamiento {
   background: #fff;
   border: 1px solid var(--line);
   color: var(--text-main);

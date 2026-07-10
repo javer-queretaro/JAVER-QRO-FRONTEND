@@ -59,7 +59,7 @@
             cada
             momento. Da el primer paso hacia la vida que siempre has soñado.
           </p>
-          <a class="cta" href="#contacto">Ver Desarrollos disponibles</a>
+          <a class="cta" href="#desarrollos">Ver Desarrollos disponibles</a>
         </div>
 
         <div class="hero-form-copy" aria-label="Formulario rapido de contacto">
@@ -67,23 +67,50 @@
           <br>
           <!-- <h3>Pregunta por tu nuevo hogar</h3> -->
           <!-- <p>Proporciona tus datos y un asesor se pondra en contacto contigo</p> -->
-          <form class="hero-form" action="#">
+          <div id="form-message-1" style="margin-bottom: 1em;"></div>
+          <form id="lead-form-1" class="hero-form" action="#">
             <div class="field field-full">
-              <label for="hero-first-name">Nombre(s)</label>
-              <input id="hero-first-name" type="text" name="firstName" />
+              <label for="hero-first-name">Nombre Completo</label>
+              <input id="hero-first-name" type="text" name="first_name" required />
             </div>
             <div class="field">
               <label for="hero-email">Correo Electrónico</label>
-              <input id="hero-email" type="email" name="email" />
+              <input id="hero-email" type="email" name="email" required />
             </div>
             <div class="field">
-              <label for="hero-phone">Telefono</label>
-              <input id="hero-phone" type="tel" name="phone" />
+              <label for="hero-phone">Teléfono</label>
+              <input id="hero-phone" type="tel" name="phone" required />
+            </div>
+            <div class="field field-full">
+              <label for="hero-zona">Zona de interés</label>
+              <select id="hero-zona" name="zona" required>
+                <option value="" selected disabled>Selecciona una zona</option>
+                <option value="El Marqués">El Marqués</option>
+                <option value="Querétaro">Querétaro</option>
+                <option value="Zibatá">Zibatá</option>
+                <option value="Zakia">Zakia</option>
+              </select>
+            </div>
+            <div id="hero-fraccionamiento-wrap" class="field field-full" style="display: none;">
+              <label for="hero-fraccionamiento">Fraccionamiento</label>
+              <select id="hero-fraccionamiento" name="fraccionamiento">
+                <option value="" selected disabled>Selecciona un Fraccionamiento</option>
+                <option value="Valvento">Valvento</option>
+                <option value="Marqués del Río">Marqués del Río</option>
+              </select>
             </div>
             <div class="field field-full terms-row">
-              <input id="hero-terms" type="checkbox" />
+              <input id="hero-terms" type="checkbox" name="aviso" />
               <label for="hero-terms">Acepto politicas de privacidad</label>
             </div>
+
+            <input type="hidden" name="00N3l00000Q7A54" id="hero-lead-project" value="">
+            <input type="hidden" name="00N3l00000Q7A57" value="Landing_Querétaro">
+            <input type="hidden" name="00N3l00000Q7A4k" value="Información">
+            <input type="hidden" name="00N3l00000Q7A4n" value="Medios Digitales">
+            <input type="hidden" name="00N3l00000Q7A5S" value="Micrositios">
+
+            <div id="recaptcha-1"></div>
             <button class="btn-submit field-full" type="submit">SOLICITAR INFORMACIÓN <i
                 class="fa-solid fa-paper-plane"></i></button>
           </form>
@@ -107,7 +134,7 @@
             Puedes editar textos desde este mismo archivo HTML y cambiar colores globales en
             <strong>styles.css</strong>.
           </p> -->
-          <a class="btn-secondary" href="#contacto">Conoce nuestros desarrollos</a>
+          <a class="btn-secondary" href="#desarrollos">Conoce nuestros desarrollos</a>
         </div>
         <div class="image-wrap reveal">
           <img src="./assets/images/los-arcos.jpeg" alt="Conoce Javer" />
@@ -1399,14 +1426,15 @@
             <p class="text-neutral-400 text-center mt-6 uppercase text-base font-roboto">Proporciona tus datos y un
               asesor se pondrá en contacto contigo</p>
           </div>
-          <form action="#"
+          <div id="form-message-2" style="margin-bottom: 1em;"></div>
+          <form id="lead-form-2" action="#"
             class="w-full grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-4 text-[color:var(--main-grey)]  animate-[cform-in_0.5s_ease_0.5s_forwards] text-left ">
             <div class="col-span-1 sm:col-span-2"><label
                 class="text-gray-600 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase"
-                for="firstName">Nombre(s)</label>
+                for="firstName">Nombre Completo</label>
               <div><input
                   class="flex h-10 rounded-md border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 mt-1 w-full bg-[color:var(--lightest-grey)] text-[color:var(--main-black)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  value="" name="firstName"></div>
+                  value="" name="first_name" required></div>
             </div>
 
             <div class="jsx-b9c5a089b9bb856a "><label
@@ -1414,7 +1442,7 @@
                 for="email">Correo Electrónico</label>
               <div><input
                   class="flex h-10 rounded-md border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 mt-1 w-full bg-[color:var(--lightest-grey)] text-[color:var(--main-black)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  value="" name="email"></div>
+                  value="" name="email" required></div>
             </div>
 
             <div class="jsx-b9c5a089b9bb856a"><label
@@ -1422,35 +1450,52 @@
                 for="phone">Teléfono</label>
               <div><input
                   class="flex h-10 rounded-md border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 mt-1 w-full bg-[color:var(--lightest-grey)] text-[color:var(--main-black)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  value="" name="phone"></div>
+                  value="" name="phone" required></div>
             </div>
 
+            <div class="col-span-1 sm:col-span-2">
+              <label
+                class="text-gray-600 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase"
+                for="contact-zona">Zona de interés</label>
+              <div><select id="contact-zona" name="zona"
+                  class="flex h-10 rounded-md border-input px-3 py-2 text-sm ring-offset-background mt-1 w-full bg-[color:var(--lightest-grey)] text-[color:var(--main-black)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  required>
+                  <option value="" selected disabled>Selecciona una zona</option>
+                  <option value="El Marqués">El Marqués</option>
+                  <option value="Querétaro">Querétaro</option>
+                  <option value="Zibatá">Zibatá</option>
+                  <option value="Zakia">Zakia</option>
+                </select></div>
+            </div>
+
+            <div id="contact-fraccionamiento-wrap" class="col-span-1 sm:col-span-2" style="display: none;">
+              <label
+                class="text-gray-600 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 uppercase"
+                for="contact-fraccionamiento">Fraccionamiento</label>
+              <div><select id="contact-fraccionamiento" name="fraccionamiento"
+                  class="flex h-10 rounded-md border-input px-3 py-2 text-sm ring-offset-background mt-1 w-full bg-[color:var(--lightest-grey)] text-[color:var(--main-black)] border-0 focus-visible:ring-0 focus-visible:ring-offset-0">
+                  <option value="" selected disabled>Selecciona un Fraccionamiento</option>
+                  <option value="Valvento">Valvento</option>
+                  <option value="Marqués del Río">Marqués del Río</option>
+                </select></div>
+            </div>
+
+            <input type="hidden" name="00N3l00000Q7A54" id="contact-lead-project" value="">
+            <input type="hidden" name="00N3l00000Q7A57" value="Landing_Querétaro">
+            <input type="hidden" name="00N3l00000Q7A4k" value="Información">
+            <input type="hidden" name="00N3l00000Q7A4n" value="Medios Digitales">
+            <input type="hidden" name="00N3l00000Q7A5S" value="Micrositios">
 
 
-            <div class="jsx-b9c5a089b9bb856a col-span-1 sm:col-span-2 flex items-center gap-2 py-2"><button
-                type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on"
-                class="peer h-4 w-4 shrink-0 rounded-sm border border-gray-400 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                id="terms"></button><input aria-hidden="true" tabindex="-1" type="checkbox" value="on"
-                style="position: absolute; pointer-events: none; opacity: 0; margin: 0px; transform: translateX(-100%); width: 16px; height: 16px;"><label
-                for="terms" class="jsx-b9c5a089b9bb856a text-sm"><a class="underline font-semibold"
+            <div class="jsx-b9c5a089b9bb856a col-span-1 sm:col-span-2 flex items-center gap-2 py-2"><input
+                id="contact-terms" type="checkbox" name="aviso" value="on"
+                class="peer h-4 w-4 shrink-0 rounded-sm border border-gray-400 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"><label
+                for="contact-terms" class="jsx-b9c5a089b9bb856a text-sm"><a class="underline font-semibold"
                   href="/avisos-de-privacidad">Acepto políticas de privacidad</a></label></div>
-            <div class="jsx-b9c5a089b9bb856a col-span-1 sm:col-span-2">
-              <div>
-                <div>
-                  <div style="width: 304px; height: 78px;">
-                    <div><iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-g59m2v5zdof7"
-                        frameborder="0" scrolling="no"
-                        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation"
-                        src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6Lcg2vQZAAAAAHpqmf6Pj_-t-doxKr1iwLWfQuWQ&amp;co=aHR0cHM6Ly9qYXZlcnFhLm9ubGluZTo0NDM.&amp;hl=en&amp;type=image&amp;v=TnA7HacJFoBWt9hnlunBlYfK&amp;theme=light&amp;size=normal&amp;badge=bottomright&amp;anchor-ms=20000&amp;execute-ms=30000&amp;cb=afbo6xfc4g2u"></iframe>
-                    </div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response"
-                      style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea>
-                  </div><iframe style="display: none;"></iframe>
-                </div>
-              </div>
-            </div>
+            <div id="recaptcha-2"></div>
             <div class=" col-span-1 sm:col-span-2"><button
                 class="btn-submit inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/70 h-11 rounded-md px-8 w-full  bg-[color:var(--main-red)] text-white hover:opacity-90 tracking-wide"
-                type="submit" disabled="">SOLICITAR INFORMACIÓN</button></div>
+                type="submit">SOLICITAR INFORMACIÓN</button></div>
           </form>
         </div>
       </div>
@@ -1494,6 +1539,395 @@
     window.STATIC_GOOGLE_MAPS_KEY = "AIzaSyB2554X4Hze2jGGhdjk0sQZpf8QjGwHjBs";
   </script>
   <script src="./script.js"></script>
+
+  <script src="https://www.google.com/recaptcha/api.js?onload=onLoadRecaptcha&render=explicit" async defer></script>
+  <script>
+    const recaptchaWidgetIds = {};
+    const formIds = ['lead-form-1', 'lead-form-2'];
+    let selectedProjectFromCard = '';
+
+    const ZONA_TO_LEAD = {
+      'Querétaro': 'PRIVALIA AMBIENTA',
+      'Zibatá': 'MASSARO',
+      'Zakia': 'CUMBRE MEZQUITE'
+    };
+
+    const FRACC_TO_LEAD = {
+      'Valvento': 'VALVENTO',
+      'Marqués del Río': 'MARQUES DEL RIO'
+    };
+
+    const LEAD_TO_SELECTION = {
+      'VALVENTO': { zona: 'El Marqués', fraccionamiento: 'Valvento' },
+      'MARQUES DEL RIO': { zona: 'El Marqués', fraccionamiento: 'Marqués del Río' },
+      'PRIVALIA AMBIENTA': { zona: 'Querétaro', fraccionamiento: '' },
+      'MASSARO': { zona: 'Zibatá', fraccionamiento: '' },
+      'CUMBRE MEZQUITE': { zona: 'Zakia', fraccionamiento: '' }
+    };
+
+    const FORM_CONFIG = {
+      'lead-form-1': {
+        zonaId: 'hero-zona',
+        fraccId: 'hero-fraccionamiento',
+        fraccWrapId: 'hero-fraccionamiento-wrap',
+        projectInputId: 'hero-lead-project'
+      },
+      'lead-form-2': {
+        zonaId: 'contact-zona',
+        fraccId: 'contact-fraccionamiento',
+        fraccWrapId: 'contact-fraccionamiento-wrap',
+        projectInputId: 'contact-lead-project'
+      }
+    };
+
+    function onLoadRecaptcha () {
+      ['1', '2'].forEach((num) => {
+        const container = document.getElementById(`recaptcha-${num}`);
+        if (!container) return;
+
+        recaptchaWidgetIds[num] = grecaptcha.render(container, {
+          sitekey: '6LeYyF4rAAAAAHybD_FuW3g0NiJJwUX7_VnfiJLv'
+        });
+        container.setAttribute('data-widget-id', recaptchaWidgetIds[num]);
+      });
+    }
+
+    function normalizeText (value) {
+      return (value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+    }
+
+    function showMessage (messageDiv, type, text) {
+      messageDiv.classList.remove('alert', 'alert-danger', 'alert-success');
+      messageDiv.textContent = text;
+      messageDiv.classList.add('alert', type === 'error' ? 'alert-danger' : 'alert-success');
+
+      if (type === 'error') {
+        setTimeout(() => {
+          messageDiv.textContent = '';
+          messageDiv.classList.remove('alert', 'alert-danger');
+        }, 5000);
+      }
+    }
+
+    function getLeadByZonaAndFraccionamiento (zona, fraccionamiento) {
+      if (zona === 'El Marqués') {
+        return FRACC_TO_LEAD[fraccionamiento] || '';
+      }
+      return ZONA_TO_LEAD[zona] || '';
+    }
+
+    function updateFraccionamientoVisibility (formId) {
+      const config = FORM_CONFIG[formId];
+      if (!config) return;
+
+      const zonaSelect = document.getElementById(config.zonaId);
+      const fraccSelect = document.getElementById(config.fraccId);
+      const fraccWrap = document.getElementById(config.fraccWrapId);
+      if (!zonaSelect || !fraccSelect || !fraccWrap) return;
+
+      const isElMarques = zonaSelect.value === 'El Marqués';
+      fraccWrap.style.display = isElMarques ? '' : 'none';
+      fraccSelect.required = isElMarques;
+
+      if (!isElMarques) {
+        fraccSelect.value = '';
+      }
+    }
+
+    function applyLeadSelectionToForm (formId, leadValue) {
+      const config = FORM_CONFIG[formId];
+      if (!config) return;
+
+      const projectInput = document.getElementById(config.projectInputId);
+      const zonaSelect = document.getElementById(config.zonaId);
+      const fraccSelect = document.getElementById(config.fraccId);
+      if (!projectInput || !zonaSelect || !fraccSelect) return;
+
+      projectInput.value = leadValue;
+
+      const mappedSelection = LEAD_TO_SELECTION[leadValue];
+      if (!mappedSelection) return;
+
+      zonaSelect.value = mappedSelection.zona;
+      updateFraccionamientoVisibility(formId);
+      fraccSelect.value = mappedSelection.fraccionamiento;
+    }
+
+    function syncLeadInputFromSelectors (formId) {
+      const config = FORM_CONFIG[formId];
+      if (!config) return '';
+
+      const zonaSelect = document.getElementById(config.zonaId);
+      const fraccSelect = document.getElementById(config.fraccId);
+      const projectInput = document.getElementById(config.projectInputId);
+      if (!zonaSelect || !fraccSelect || !projectInput) return '';
+
+      const lead = getLeadByZonaAndFraccionamiento(zonaSelect.value, fraccSelect.value);
+      projectInput.value = lead;
+      return lead;
+    }
+
+    function setupZoneAndFraccionamientoBehavior (formId) {
+      const config = FORM_CONFIG[formId];
+      if (!config) return;
+
+      const zonaSelect = document.getElementById(config.zonaId);
+      const fraccSelect = document.getElementById(config.fraccId);
+      if (!zonaSelect || !fraccSelect) return;
+
+      const onChange = () => {
+        updateFraccionamientoVisibility(formId);
+        if (formId === 'lead-form-2' && selectedProjectFromCard) {
+          return;
+        }
+        syncLeadInputFromSelectors(formId);
+      };
+
+      zonaSelect.addEventListener('change', onChange);
+      fraccSelect.addEventListener('change', onChange);
+
+      updateFraccionamientoVisibility(formId);
+    }
+
+    function getProjectFromCardTitle (title) {
+      const value = normalizeText(title);
+      if (value.includes('valvento')) return 'VALVENTO';
+      if (value.includes('marques del rio')) return 'MARQUES DEL RIO';
+      if (value.includes('privalia ambienta')) return 'PRIVALIA AMBIENTA';
+      if (value.includes('massaro residencial')) return 'MASSARO';
+      if (value.includes('cumbre mezquite')) return 'CUMBRE MEZQUITE';
+      return '';
+    }
+
+    function getGclidFromUrl () {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('gclid') || '';
+    }
+
+    function setupCardSelectionBehavior () {
+      const mount = document.getElementById('dev-state-content');
+      if (!mount) return;
+
+      function scrollToSecondForm () {
+        const secondForm = document.getElementById('lead-form-2');
+        const contactSection = document.getElementById('contacto');
+        const header = document.querySelector('.site-header');
+        const headerOffset = header ? header.offsetHeight + 16 : 96;
+
+        const target = secondForm || contactSection;
+        if (!target) return;
+
+        const top = Math.max(
+          0,
+          window.pageYOffset + target.getBoundingClientRect().top - headerOffset
+        );
+
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+
+      mount.addEventListener('click', (event) => {
+        const trigger = event.target.closest('a,button');
+        if (!trigger) return;
+
+        const card = trigger.closest('.bg-card.text-card-foreground');
+        if (!card) return;
+
+        const title = card.querySelector('h4')?.textContent || '';
+        const lead = getProjectFromCardTitle(title);
+        if (!lead) return;
+
+        selectedProjectFromCard = lead;
+        applyLeadSelectionToForm('lead-form-2', lead);
+
+        const href = (trigger.getAttribute('href') || '').trim();
+        const triggerText = normalizeText(trigger.textContent || '');
+        const isContactTrigger =
+          href === '#contacto' ||
+          href.endsWith('#contacto') ||
+          triggerText.includes('contactanos') ||
+          triggerText.includes('contacto') ||
+          triggerText.includes('contacta') ||
+          triggerText.includes('solicitar informacion') ||
+          trigger.hasAttribute('data-contact-trigger');
+
+        if (isContactTrigger) {
+          event.preventDefault();
+          event.stopPropagation();
+          scrollToSecondForm();
+
+          window.setTimeout(() => {
+            const firstField = document.querySelector('#lead-form-2 [name="first_name"]');
+            if (firstField) {
+              firstField.focus();
+            }
+          }, 450);
+        }
+      });
+    }
+
+    setupZoneAndFraccionamientoBehavior('lead-form-1');
+    setupZoneAndFraccionamientoBehavior('lead-form-2');
+    setupCardSelectionBehavior();
+
+    formIds.forEach((formId) => {
+      const form = document.getElementById(formId);
+      if (!form) return;
+
+      const formNum = formId.split('-')[2];
+      const config = FORM_CONFIG[formId];
+      let messageDiv = document.getElementById(`form-message-${formNum}`);
+      if (!messageDiv) {
+        messageDiv = document.createElement('div');
+        messageDiv.id = `form-message-${formNum}`;
+        form.appendChild(messageDiv);
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        messageDiv.textContent = '';
+        messageDiv.classList.remove('alert', 'alert-danger', 'alert-success');
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnHtml = submitBtn ? submitBtn.innerHTML : null;
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.classList.add('disabled');
+          submitBtn.innerHTML = 'Enviando...';
+        }
+
+        try {
+          const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetIds[formNum]);
+          if (!recaptchaToken) {
+            showMessage(messageDiv, 'error', 'Por favor, completa el reCAPTCHA.');
+            return;
+          }
+
+          const formData = new FormData(form);
+          const first_name = formData.get('first_name')?.trim() || '';
+          const email = formData.get('email')?.trim() || '';
+          const phone = formData.get('phone')?.trim() || '';
+          const aviso = formData.has('aviso');
+          const zona = formData.get('zona')?.trim() || '';
+          const fraccionamiento = formData.get('fraccionamiento')?.trim() || '';
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const phoneRegex = /^[0-9]{8,10}$/;
+          const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{4,}$/;
+
+          if (!nameRegex.test(first_name)) {
+            showMessage(messageDiv, 'error', 'Nombre inválido. Usa solo letras y al menos 4 caracteres.');
+            return;
+          }
+
+          if (!first_name || !email || !phone || !zona) {
+            showMessage(messageDiv, 'error', 'Todos los campos son obligatorios.');
+            return;
+          }
+
+          if (!emailRegex.test(email)) {
+            showMessage(messageDiv, 'error', 'Correo electrónico no válido.');
+            return;
+          }
+
+          if (!phoneRegex.test(phone)) {
+            showMessage(messageDiv, 'error', 'Teléfono no válido. Debe contener de 8 a 10 dígitos.');
+            return;
+          }
+
+          if (!aviso) {
+            showMessage(messageDiv, 'error', 'Debes aceptar el aviso de privacidad.');
+            return;
+          }
+
+          if (zona === 'El Marqués' && !fraccionamiento) {
+            showMessage(messageDiv, 'error', 'Selecciona un fraccionamiento para El Marqués.');
+            return;
+          }
+
+          let leadProject = '';
+          if (formId === 'lead-form-2' && selectedProjectFromCard) {
+            leadProject = selectedProjectFromCard;
+            applyLeadSelectionToForm(formId, leadProject);
+          } else {
+            leadProject = syncLeadInputFromSelectors(formId);
+          }
+
+          if (!leadProject) {
+            showMessage(messageDiv, 'error', 'No se pudo determinar el desarrollo seleccionado.');
+            return;
+          }
+
+          const data = {
+            first_name,
+            email,
+            phone,
+            aviso,
+            '00N3l00000Q7A54': leadProject,
+            '00N3l00000Q7A57': formData.get('00N3l00000Q7A57'),
+            '00N3l00000Q7A4k': formData.get('00N3l00000Q7A4k'),
+            '00N3l00000Q7A4n': formData.get('00N3l00000Q7A4n'),
+            '00N3l00000Q7A5S': formData.get('00N3l00000Q7A5S'),
+            'g-recaptcha-response': recaptchaToken,
+            form_origen: formId
+          };
+
+          const configuredBaseUrl = (window.LANDING_API_BASE_URL || '').trim().replace(/\/$/, '');
+          const endpoint = configuredBaseUrl ? `${configuredBaseUrl}/enviar` : '/enviar';
+
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            showMessage(messageDiv, 'error', err.error || 'Error al enviar el formulario.');
+            return;
+          }
+
+          showMessage(messageDiv, 'success', 'Formulario enviado correctamente.');
+
+          setTimeout(() => {
+            messageDiv.textContent = '';
+            messageDiv.classList.remove('alert', 'alert-success');
+          }, 5000);
+
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'massaro_form_submit',
+            form_name: `massaro_${formId}`,
+            form_origen: formId,
+            gclid: getGclidFromUrl()
+          });
+
+          form.reset();
+          updateFraccionamientoVisibility(formId);
+          syncLeadInputFromSelectors(formId);
+          grecaptcha.reset(recaptchaWidgetIds[formNum]);
+
+          if (formId === 'lead-form-2' && selectedProjectFromCard) {
+            applyLeadSelectionToForm(formId, selectedProjectFromCard);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          showMessage(messageDiv, 'error', 'Error de red o del servidor.');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('disabled');
+            if (originalBtnHtml !== null) {
+              submitBtn.innerHTML = originalBtnHtml;
+            }
+          }
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
