@@ -383,6 +383,9 @@ function setupDevelopmentsMap () {
   const mapKeyFromWindow = window.STATIC_GOOGLE_MAPS_KEY || "";
   const mapKeyFromData = mapContainer.getAttribute("data-google-maps-key") || "";
   const googleMapsKey = (mapKeyFromWindow || mapKeyFromData).trim();
+  const mapIdFromWindow = window.STATIC_GOOGLE_MAPS_MAP_ID || "";
+  const mapIdFromData = mapContainer.getAttribute("data-google-maps-map-id") || "";
+  const googleMapsMapId = (mapIdFromWindow || mapIdFromData).trim();
 
   function markerSvg (fillColor) {
     return `
@@ -467,23 +470,53 @@ function setupDevelopmentsMap () {
   }
 
   function loadGoogleMapsApi (apiKey) {
+    const isGoogleMapsReady = () =>
+      Boolean(window.google && window.google.maps && typeof window.google.maps.Map === "function");
+
+    const waitForGoogleMapsReady = (maxAttempts = 30, intervalMs = 100) =>
+      new Promise((resolve) => {
+        if (isGoogleMapsReady()) {
+          resolve(true);
+          return;
+        }
+
+        let attempts = 0;
+        const timer = window.setInterval(() => {
+          attempts += 1;
+          if (isGoogleMapsReady()) {
+            window.clearInterval(timer);
+            resolve(true);
+            return;
+          }
+
+          if (attempts >= maxAttempts) {
+            window.clearInterval(timer);
+            resolve(false);
+          }
+        }, intervalMs);
+      });
+
     if (!apiKey) return Promise.resolve(false);
-    if (window.google && window.google.maps) return Promise.resolve(true);
+    if (isGoogleMapsReady()) return Promise.resolve(true);
 
     return new Promise((resolve) => {
       const existing = document.querySelector('script[data-google-maps-loader="static-landing"]');
       if (existing) {
-        existing.addEventListener("load", () => resolve(Boolean(window.google && window.google.maps)));
+        existing.addEventListener("load", async () => {
+          resolve(await waitForGoogleMapsReady());
+        });
         existing.addEventListener("error", () => resolve(false));
         return;
       }
 
       const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&loading=async&libraries=marker&v=weekly`;
       script.async = true;
       script.defer = true;
       script.setAttribute("data-google-maps-loader", "static-landing");
-      script.onload = () => resolve(Boolean(window.google && window.google.maps));
+      script.onload = async () => {
+        resolve(await waitForGoogleMapsReady());
+      };
       script.onerror = () => resolve(false);
       document.head.appendChild(script);
     });
@@ -573,8 +606,18 @@ function setupDevelopmentsMap () {
     bindTabs(renderStateMarkers, () => map.invalidateSize());
   }
 
-  function initGoogleMap () {
-    const map = new window.google.maps.Map(mapContainer, {
+  async function initGoogleMap () {
+    let AdvancedMarkerElement = null;
+    const canUseAdvancedMarkers = Boolean(googleMapsMapId);
+
+    if (canUseAdvancedMarkers && typeof window.google.maps.importLibrary === "function") {
+      const markerLibrary = await window.google.maps.importLibrary("marker");
+      AdvancedMarkerElement = markerLibrary?.AdvancedMarkerElement || null;
+    } else if (canUseAdvancedMarkers && window.google.maps.marker?.AdvancedMarkerElement) {
+      AdvancedMarkerElement = window.google.maps.marker.AdvancedMarkerElement;
+    }
+
+    const mapOptions = {
       center: { lat: defaultCenter[0], lng: defaultCenter[1] },
       zoom: 11,
       disableDefaultUI: true,
@@ -582,19 +625,33 @@ function setupDevelopmentsMap () {
       mapTypeControl: false,
       streetViewControl: false,
       fullscreenControl: false,
-    });
-
-    const infoWindow = new window.google.maps.InfoWindow();
-    let markers = [];
-
-    const markerIcon = {
-      url: markerIconUrl("#cc0f19"),
-      scaledSize: new window.google.maps.Size(32, 39),
-      anchor: new window.google.maps.Point(16, 39),
     };
 
+    if (googleMapsMapId) {
+      mapOptions.mapId = googleMapsMapId;
+    }
+
+    const map = new window.google.maps.Map(mapContainer, mapOptions);
+
+    let markers = [];
+
+    function createMarkerContent () {
+      const markerImage = document.createElement("img");
+      markerImage.src = markerIconUrl("#cc0f19");
+      markerImage.width = 32;
+      markerImage.height = 39;
+      markerImage.alt = "";
+      markerImage.setAttribute("aria-hidden", "true");
+      markerImage.style.display = "block";
+      markerImage.style.transform = "translateY(-39px)";
+      return markerImage;
+    }
+
     function clearMarkers () {
-      markers.forEach((marker) => marker.setMap(null));
+      markers.forEach((marker) => {
+        if (typeof marker.setMap === "function") marker.setMap(null);
+        else marker.map = null;
+      });
       markers = [];
     }
 
@@ -619,16 +676,33 @@ function setupDevelopmentsMap () {
 
       projects.forEach((project) => {
         const position = { lat: project.lat, lng: project.lng };
-        const marker = new window.google.maps.Marker({
-          position,
-          map,
-          icon: markerIcon,
-          title: project.name,
-        });
+        const marker = AdvancedMarkerElement
+          ? new AdvancedMarkerElement({
+            position,
+            map,
+            title: project.name,
+            content: createMarkerContent(),
+          })
+          : new window.google.maps.Marker({
+            position,
+            map,
+            title: project.name,
+            icon: {
+              url: markerIconUrl("#cc0f19"),
+              scaledSize: new window.google.maps.Size(32, 39),
+              anchor: new window.google.maps.Point(16, 39),
+            },
+          });
 
-        marker.addListener("click", () => {
-          openMapsUrl(project.mapsUrl);
-        });
+        if (AdvancedMarkerElement && typeof marker.addEventListener === "function") {
+          marker.addEventListener("gmp-click", () => {
+            openMapsUrl(project.mapsUrl);
+          });
+        } else {
+          marker.addListener("click", () => {
+            openMapsUrl(project.mapsUrl);
+          });
+        }
 
         markers.push(marker);
         points.push(position);
@@ -652,13 +726,17 @@ function setupDevelopmentsMap () {
     bindTabs(renderStateMarkers);
   }
 
-  loadGoogleMapsApi(googleMapsKey).then((loaded) => {
+  loadGoogleMapsApi(googleMapsKey).then(async (loaded) => {
     if (loaded) {
-      initGoogleMap();
-      setupMapTabsMirror((slug) => {
-        if (renderMapForState) renderMapForState(slug);
-      });
-      return;
+      try {
+        await initGoogleMap();
+        setupMapTabsMirror((slug) => {
+          if (renderMapForState) renderMapForState(slug);
+        });
+        return;
+      } catch (_error) {
+        // If Google Maps fails at runtime, keep UX functional with Leaflet.
+      }
     }
     initLeafletMap();
     setupMapTabsMirror((slug) => {
