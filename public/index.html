@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Landing Javer | Version Estatica</title>
+  <title>Casas y departamentos en Querétaro</title>
   <meta name="description"
     content="Landing estatica inspirada en el estilo visual de Javer, creada en HTML, CSS y JS puro." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,6 +18,29 @@
   <link rel="stylesheet" href="./base-site.css" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./font-icons.css">
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TZ9T64V');</script>
+  <!-- End Google Tag Manager -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-38D897N597"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag () { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-38D897N597', {
+      'linker': {
+        'domains': ['javer.com.mx', 'javer-queretaro.com']
+      }
+    });
+  </script>
 </head>
 
 <body>
@@ -900,7 +923,8 @@
                                   class="shrink-0 grow-0 basis-full max-w-full min-w-0 p-0">
                                   <div
                                     class="group relative select-none overflow-hidden   w-full h-64 rounded-t-xl lg:rounded-r-2xl lg:rounded-s-2xl">
-                                    <img alt="massaro-residencial-casas-javer" decoding="async" data-nimg="fill"
+                                    <img alt="casas y departamentos javer en querétaro" decoding="async"
+                                      data-nimg="fill"
                                       class="object-cover transition-transform duration-500 group-hover:scale-105"
                                       src="./assets/images/massaro/1.webp"
                                       style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
@@ -1513,7 +1537,7 @@
   </footer>
 
 
-  <div
+  <div id="btn_wpp_javer_qro"
     class="bg-green-500 w-14 h-14 flex items-center justify-center rounded-full shadow-lg fixed bottom-44 right-4 cursor-pointer z-19">
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
       class="iconify iconify--fa-brands text-white" width="32" height="36.58" viewBox="0 0 448 512">
@@ -1906,8 +1930,8 @@
 
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
-            event: 'massaro_form_submit',
-            form_name: `massaro_${formId}`,
+            event: 'javer_qro_form_submit',
+            form_name: `javer_qro_${formId}`,
             form_origen: formId,
             gclid: getGclidFromUrl()
           });
