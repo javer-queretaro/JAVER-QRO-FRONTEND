@@ -658,3 +658,23 @@ section#desarrollos {
 .btn-submit {
   letter-spacing: 3px;
 }
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: #f5c6cb solid 1px;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border: #c3e6cb solid 1px;
+}
+
+.alert {
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  /* border: 1px solid transparent; */
+  border-radius: .25rem;
+}
