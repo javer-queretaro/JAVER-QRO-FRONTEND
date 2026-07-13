@@ -203,6 +203,9 @@ select#hero-fraccionamiento {
   color: var(--text-main);
   border-radius: 10px;
   height: 42px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 0 0.85rem;
   font: inherit;
 }
@@ -571,11 +574,15 @@ select#hero-fraccionamiento {
     grid-template-columns: 1fr;
     align-items: flex-start;
     gap: 1rem;
+    padding-top: 10%;
+    padding-bottom: 10%;
   }
 
   .hero-form-copy {
     justify-self: stretch;
     max-width: 100%;
+    width: 100%;
+    min-width: 0;
   }
 
   .search-card {
@@ -594,12 +601,30 @@ select#hero-fraccionamiento {
     grid-template-columns: 1fr 1fr;
   }
 
+  .dev-tab {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+
   #developments-map {
     height: 340px;
   }
 }
 
 @media (max-width: 760px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: min(1120px, calc(100% - 1.2rem));
+  }
+
+  .hero-copy {
+    margin-bottom: 2rem;
+  }
+
   .map-section-head {
     flex-direction: column;
     align-items: stretch;
@@ -612,6 +637,73 @@ select#hero-fraccionamiento {
 
   .hero-form {
     grid-template-columns: 1fr;
+  }
+
+  .hero,
+  .hero-content,
+  .hero-grid,
+  .hero-copy,
+  .hero-form-copy,
+  .hero-form,
+  .hero-form .field,
+  .hero-form .field-full,
+  .hero-form input,
+  .hero-form select {
+    min-width: 0;
+  }
+
+  .hero-form-copy {
+    padding: 1rem;
+  }
+
+  .hero-form .btn-submit,
+  .btn-submit {
+    letter-spacing: 1.2px;
+  }
+
+  #desarrollos .container>div {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  .dev-zone-tabs {
+    gap: 0.45rem;
+    justify-content: stretch;
+  }
+
+  .dev-tab {
+    flex: 1 1 calc(50% - 0.45rem);
+    max-width: calc(50% - 0.45rem);
+    min-height: 44px;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.86rem;
+  }
+
+  #contacto .contact-box.caja-form {
+    width: calc(100% - 1.2rem) !important;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .caja-form {
+    padding: 0.85rem 0.6rem 0;
+  }
+
+  #lead-form-2 {
+    gap: 0.75rem;
+  }
+
+  #recaptcha-1,
+  #recaptcha-2 {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  #recaptcha-1>div,
+  #recaptcha-2>div {
+    transform-origin: left top;
   }
 
   .menu-toggle {
@@ -644,6 +736,19 @@ select#hero-fraccionamiento {
   .footer-wrap {
     flex-direction: column;
     text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+
+  #recaptcha-1,
+  #recaptcha-2 {
+    height: 68px;
+  }
+
+  #recaptcha-1>div,
+  #recaptcha-2>div {
+    transform: scale(0.86);
   }
 }
 
