@@ -784,16 +784,17 @@ section#desarrollos {
   border-radius: .25rem;
 }
 
-input#hero-terms {
+input#hero-terms,
+input#contact-terms {
   width: 1.5em;
   height: 1.5em;
-  margin-top: .25em;
+  /* margin-top: .25em; */
   vertical-align: top;
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   border: 1px solid rgba(0, 0, 0, .25);
-  appearance: none;
+  /* appearance: none; */
   border-radius: 5px;
 }

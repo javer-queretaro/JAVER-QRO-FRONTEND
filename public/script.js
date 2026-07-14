@@ -27,7 +27,7 @@ const observer = new IntersectionObserver(
 
 revealElements.forEach((element) => observer.observe(element));
 
-function setupCarousel (carouselRoot) {
+function setupCarousel(carouselRoot) {
   const viewport = carouselRoot.querySelector(":scope > .overflow-hidden");
   const track = viewport?.querySelector(":scope > .flex");
 
@@ -55,24 +55,24 @@ function setupCarousel (carouselRoot) {
   track.style.willChange = "transform";
   track.style.transition = "transform 350ms ease";
 
-  function updateButtons () {
+  function updateButtons() {
     if (prevButton) prevButton.disabled = index <= 0;
     if (nextButton) nextButton.disabled = index >= slides.length - 1;
   }
 
-  function updateTrack () {
+  function updateTrack() {
     track.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
     updateButtons();
   }
 
-  function goNext () {
+  function goNext() {
     if (index < slides.length - 1) {
       index += 1;
       updateTrack();
     }
   }
 
-  function goPrev () {
+  function goPrev() {
     if (index > 0) {
       index -= 1;
       updateTrack();
@@ -147,7 +147,7 @@ const carousels = document.querySelectorAll(
 );
 carousels.forEach((carousel) => setupCarousel(carousel));
 
-function toSlug (value) {
+function toSlug(value) {
   return (value || "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -156,13 +156,12 @@ function toSlug (value) {
     .replace(/^-+|-+$/g, "");
 }
 
-function setupDevelopmentsTabsFromBackup () {
+function setupDevelopmentsTabsFromBackup() {
   const root = document.querySelector("[data-dev-tabs]");
-  const tabsBar = root?.querySelector(".dev-zone-tabs");
   const contentMount = document.getElementById("dev-state-content");
   const backup = document.getElementById("legacy-developments-backup");
 
-  if (!root || !tabsBar || !contentMount || !backup) return;
+  if (!root || !contentMount || !backup) return;
 
   const firstNode = backup.content.firstElementChild;
   if (!firstNode) return;
@@ -182,29 +181,11 @@ function setupDevelopmentsTabsFromBackup () {
 
   if (!stateSections.length) return;
 
-  tabsBar.innerHTML = "";
-
-  function setActiveState (activeSlug) {
-    Array.from(tabsBar.querySelectorAll(".dev-tab")).forEach((button) => {
-      button.classList.toggle("active", button.getAttribute("data-state-tab") === activeSlug);
-    });
-
-    stateSections.forEach((state) => {
-      state.section.style.display = state.slug === activeSlug ? "block" : "none";
-    });
-  }
-
-  stateSections.forEach((state, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `dev-tab${index === 0 ? " active" : ""}`;
-    button.setAttribute("data-state-tab", state.slug);
-    button.textContent = state.name;
-    button.addEventListener("click", () => setActiveState(state.slug));
-    tabsBar.appendChild(button);
+  // The new UX keeps all zones visible in one stacked list.
+  stateSections.forEach((state) => {
+    state.section.style.display = "block";
+    state.section.setAttribute("data-state-tab", state.slug);
   });
-
-  setActiveState(stateSections[0].slug);
 
   const clonedCarousels = contentMount.querySelectorAll(
     '[role="region"][aria-roledescription="carousel"]'
@@ -214,7 +195,7 @@ function setupDevelopmentsTabsFromBackup () {
   setupAmenitiesLikeProjectCard(contentMount);
 }
 
-function normalizeText (value) {
+function normalizeText(value) {
   return (value || "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -230,7 +211,7 @@ const AMENITIES_BY_PROJECT = {
   "cumbre mezquite": ["Casa club", "Alberca", "Juegos infantiles"],
 };
 
-function getAmenitiesForCard (card) {
+function getAmenitiesForCard(card) {
   const title = card.querySelector("h4")?.textContent || "";
   const normalized = normalizeText(title);
 
@@ -242,7 +223,7 @@ function getAmenitiesForCard (card) {
   return AMENITIES_BY_PROJECT[projectKey];
 }
 
-function createAmenitiesPanel (items, isMobile) {
+function createAmenitiesPanel(items, isMobile) {
   const panel = document.createElement("div");
   panel.className = `amenities-panel ${isMobile ? "amenities-panel-mobile" : "amenities-panel-desktop"}`;
 
@@ -264,13 +245,13 @@ function createAmenitiesPanel (items, isMobile) {
   return panel;
 }
 
-function closeAllMobileAmenities (scope) {
+function closeAllMobileAmenities(scope) {
   scope.querySelectorAll(".amenities-panel-mobile.open").forEach((panel) => {
     panel.classList.remove("open");
   });
 }
 
-function setupAmenitiesLikeProjectCard (scope) {
+function setupAmenitiesLikeProjectCard(scope) {
   const cards = scope.querySelectorAll(".bg-card.text-card-foreground");
 
   cards.forEach((card) => {
@@ -323,7 +304,7 @@ function setupAmenitiesLikeProjectCard (scope) {
 
 setupDevelopmentsTabsFromBackup();
 
-function setupDevelopmentsMap () {
+function setupDevelopmentsMap() {
   const mapContainer = document.getElementById("developments-map");
   if (!mapContainer) return;
 
@@ -387,7 +368,7 @@ function setupDevelopmentsMap () {
   const mapIdFromData = mapContainer.getAttribute("data-google-maps-map-id") || "";
   const googleMapsMapId = (mapIdFromWindow || mapIdFromData).trim();
 
-  function markerSvg (fillColor) {
+  function markerSvg(fillColor) {
     return `
       <svg width="32" height="39" viewBox="0 0 56 68" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M26.7715 67.7369L26.7603 67.7319L26.7374 67.7215L26.6648 67.6881C26.6047 67.6601 26.5213 67.6209 26.4164 67.5703C26.2065 67.4691 25.9098 67.3223 25.5387 67.1287C24.7969 66.7419 23.7551 66.1675 22.5134 65.3979C20.0351 63.8619 16.7305 61.5304 13.4181 58.3377C6.79132 51.9504 0 41.9699 0 28C0 12.536 12.536 0 28 0C43.464 0 56 12.536 56 28C56 41.9699 49.2087 51.9504 42.5819 58.3377C39.2695 61.5304 35.9649 63.8619 33.4866 65.3979C32.2449 66.1675 31.2031 66.7419 30.4613 67.1287C30.0902 67.3223 29.7935 67.4691 29.5836 67.5703C29.4787 67.6209 29.3953 67.6601 29.3352 67.6881L29.2626 67.7215L29.2397 67.7319L29.2316 67.7355C28.44 68.08 28 68 28 68C28 68 27.56 68.08 26.7715 67.7369Z" fill="${fillColor}"/>
@@ -396,80 +377,46 @@ function setupDevelopmentsMap () {
     `;
   }
 
-  function markerIconUrl (fillColor) {
+  function markerIconUrl(fillColor) {
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(markerSvg(fillColor))}`;
   }
 
-  function projectLabel (projects) {
+  function projectLabel(projects) {
     if (!projects.length) return "No hay desarrollos con coordenadas para esta zona.";
     return `${projects.length} desarrollo${projects.length > 1 ? "s" : ""} en ${projects[0].zone}.`;
   }
 
-  function updateMapHeading (projects) {
+  function updateMapHeading(projects) {
     if (!title) return;
     if (!projects.length) {
       title.textContent = "Mapa de zonas y desarrollos";
       return;
     }
-    title.textContent = `${projects[0].zone}`;
+    const zones = [...new Set(projects.map((project) => project.zone))];
+    title.textContent =
+      zones.length > 1 ? "Mapa de zonas y desarrollos" : `${projects[0].zone}`;
   }
 
-  function updateMapLink (projects) {
+  function updateMapLink(projects) {
     if (!mapZoneLink) return;
 
     const nextUrl = projects[0]?.mapsUrl || "https://maps.app.goo.gl/ZeLwaQCYwk5pjp5cA";
     mapZoneLink.href = nextUrl;
   }
 
-  function openMapsUrl (url) {
+  function openMapsUrl(url) {
     if (!url) return;
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
-  function setupMapTabsMirror (onMirrorSelect) {
-    const sourceTabsBar = document.querySelector("[data-dev-tabs] .dev-zone-tabs");
-    const mirrorTabsBar = document.getElementById("map-zone-tabs");
-    if (!sourceTabsBar || !mirrorTabsBar) return;
-
-    const sourceTabs = Array.from(sourceTabsBar.querySelectorAll(".dev-tab"));
-    mirrorTabsBar.innerHTML = "";
-
-    const syncMirrorState = (forcedSlug = null) => {
-      const activeSlug =
-        forcedSlug ||
-        sourceTabsBar.querySelector(".dev-tab.active")?.getAttribute("data-state-tab");
-      Array.from(mirrorTabsBar.querySelectorAll(".dev-tab")).forEach((button) => {
-        button.classList.toggle("active", button.getAttribute("data-state-tab") === activeSlug);
-      });
-    };
-
-    sourceTabs.forEach((sourceTab) => {
-      const slug = sourceTab.getAttribute("data-state-tab");
-      if (!slug) return;
-
-      const mirrorButton = document.createElement("button");
-      mirrorButton.type = "button";
-      mirrorButton.className = "dev-tab";
-      mirrorButton.setAttribute("data-state-tab", slug);
-      mirrorButton.textContent = sourceTab.textContent || "";
-      mirrorButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        syncMirrorState(slug);
-        if (typeof onMirrorSelect === "function") {
-          onMirrorSelect(slug);
-        }
-      });
-      mirrorTabsBar.appendChild(mirrorButton);
-    });
-
-    sourceTabsBar.addEventListener("click", () => {
-      window.setTimeout(syncMirrorState, 0);
-    });
-
-    syncMirrorState();
+  function getProjectsForState(stateSlug) {
+    if (stateSlug === "all-zones") {
+      return Object.values(projectsByState).flat();
+    }
+    return projectsByState[stateSlug] || [];
   }
 
-  function loadGoogleMapsApi (apiKey) {
+  function loadGoogleMapsApi(apiKey) {
     const isGoogleMapsReady = () =>
       Boolean(window.google && window.google.maps && typeof window.google.maps.Map === "function");
 
@@ -522,29 +469,7 @@ function setupDevelopmentsMap () {
     });
   }
 
-  function bindTabs (renderFn, postRender) {
-    const tabRoot = document.querySelector("[data-dev-tabs]");
-    const tabs = tabRoot ? Array.from(tabRoot.querySelectorAll(".dev-tab")) : [];
-
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const stateSlug = tab.getAttribute("data-state-tab");
-        if (!stateSlug) return;
-
-        window.setTimeout(() => {
-          renderFn(stateSlug);
-          if (postRender) postRender();
-        }, 0);
-      });
-    });
-
-    const initialActive =
-      tabRoot?.querySelector(".dev-tab.active")?.getAttribute("data-state-tab") || "el-marques";
-    renderFn(initialActive);
-    if (postRender) window.setTimeout(postRender, 120);
-  }
-
-  function initLeafletMap () {
+  function initLeafletMap() {
     if (typeof window.L === "undefined") return;
 
     const map = window.L.map(mapContainer, {
@@ -564,11 +489,11 @@ function setupDevelopmentsMap () {
       popupAnchor: [0, -34],
     });
 
-    function renderStateMarkers (stateSlug) {
+    function renderStateMarkers(stateSlug) {
       if (stateSlug === lastRenderedStateSlug) return;
       lastRenderedStateSlug = stateSlug;
 
-      const projects = projectsByState[stateSlug] || [];
+      const projects = getProjectsForState(stateSlug);
       layerGroup.clearLayers();
 
       updateMapHeading(projects);
@@ -603,10 +528,11 @@ function setupDevelopmentsMap () {
 
     renderMapForState = renderStateMarkers;
 
-    bindTabs(renderStateMarkers, () => map.invalidateSize());
+    renderStateMarkers("all-zones");
+    window.setTimeout(() => map.invalidateSize(), 120);
   }
 
-  async function initGoogleMap () {
+  async function initGoogleMap() {
     let AdvancedMarkerElement = null;
     const canUseAdvancedMarkers = Boolean(googleMapsMapId);
 
@@ -635,7 +561,7 @@ function setupDevelopmentsMap () {
 
     let markers = [];
 
-    function createMarkerContent () {
+    function createMarkerContent() {
       const markerImage = document.createElement("img");
       markerImage.src = markerIconUrl("#cc0f19");
       markerImage.width = 32;
@@ -647,7 +573,7 @@ function setupDevelopmentsMap () {
       return markerImage;
     }
 
-    function clearMarkers () {
+    function clearMarkers() {
       markers.forEach((marker) => {
         if (typeof marker.setMap === "function") marker.setMap(null);
         else marker.map = null;
@@ -655,11 +581,11 @@ function setupDevelopmentsMap () {
       markers = [];
     }
 
-    function renderStateMarkers (stateSlug) {
+    function renderStateMarkers(stateSlug) {
       if (stateSlug === lastRenderedStateSlug) return;
       lastRenderedStateSlug = stateSlug;
 
-      const projects = projectsByState[stateSlug] || [];
+      const projects = getProjectsForState(stateSlug);
       clearMarkers();
 
       updateMapHeading(projects);
@@ -723,25 +649,19 @@ function setupDevelopmentsMap () {
 
     renderMapForState = renderStateMarkers;
 
-    bindTabs(renderStateMarkers);
+    renderStateMarkers("all-zones");
   }
 
   loadGoogleMapsApi(googleMapsKey).then(async (loaded) => {
     if (loaded) {
       try {
         await initGoogleMap();
-        setupMapTabsMirror((slug) => {
-          if (renderMapForState) renderMapForState(slug);
-        });
         return;
       } catch (_error) {
         // If Google Maps fails at runtime, keep UX functional with Leaflet.
       }
     }
     initLeafletMap();
-    setupMapTabsMirror((slug) => {
-      if (renderMapForState) renderMapForState(slug);
-    });
   });
 }
 
