@@ -392,9 +392,7 @@ function setupDevelopmentsMap() {
       title.textContent = "Mapa de zonas y desarrollos";
       return;
     }
-    const zones = [...new Set(projects.map((project) => project.zone))];
-    title.textContent =
-      zones.length > 1 ? "Mapa de zonas y desarrollos" : `${projects[0].zone}`;
+    title.textContent = `${projects[0].zone}`;
   }
 
   function updateMapLink(projects) {
@@ -409,11 +407,44 @@ function setupDevelopmentsMap() {
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
-  function getProjectsForState(stateSlug) {
-    if (stateSlug === "all-zones") {
-      return Object.values(projectsByState).flat();
+  function setupMapTabs(onTabSelect) {
+    const tabsBar = document.getElementById("map-zone-tabs");
+    if (!tabsBar) return null;
+
+    tabsBar.innerHTML = "";
+
+    const stateEntries = Object.keys(projectsByState).map((slug) => {
+      const firstProject = projectsByState[slug]?.[0];
+      return {
+        slug,
+        label: firstProject?.zone || slug,
+      };
+    });
+
+    if (!stateEntries.length) return null;
+
+    function setActive(slug) {
+      Array.from(tabsBar.querySelectorAll(".dev-tab")).forEach((button) => {
+        button.classList.toggle("active", button.getAttribute("data-state-tab") === slug);
+      });
     }
-    return projectsByState[stateSlug] || [];
+
+    stateEntries.forEach((state, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `dev-tab${index === 0 ? " active" : ""}`;
+      button.setAttribute("data-state-tab", state.slug);
+      button.textContent = state.label;
+      button.addEventListener("click", () => {
+        setActive(state.slug);
+        if (typeof onTabSelect === "function") {
+          onTabSelect(state.slug);
+        }
+      });
+      tabsBar.appendChild(button);
+    });
+
+    return stateEntries[0].slug;
   }
 
   function loadGoogleMapsApi(apiKey) {
@@ -493,7 +524,7 @@ function setupDevelopmentsMap() {
       if (stateSlug === lastRenderedStateSlug) return;
       lastRenderedStateSlug = stateSlug;
 
-      const projects = getProjectsForState(stateSlug);
+      const projects = projectsByState[stateSlug] || [];
       layerGroup.clearLayers();
 
       updateMapHeading(projects);
@@ -526,9 +557,9 @@ function setupDevelopmentsMap() {
       }
     }
 
+    const initialState = setupMapTabs(renderStateMarkers) || "el-marques";
     renderMapForState = renderStateMarkers;
-
-    renderStateMarkers("all-zones");
+    renderStateMarkers(initialState);
     window.setTimeout(() => map.invalidateSize(), 120);
   }
 
@@ -585,7 +616,7 @@ function setupDevelopmentsMap() {
       if (stateSlug === lastRenderedStateSlug) return;
       lastRenderedStateSlug = stateSlug;
 
-      const projects = getProjectsForState(stateSlug);
+      const projects = projectsByState[stateSlug] || [];
       clearMarkers();
 
       updateMapHeading(projects);
@@ -647,9 +678,9 @@ function setupDevelopmentsMap() {
       }
     }
 
+    const initialState = setupMapTabs(renderStateMarkers) || "el-marques";
     renderMapForState = renderStateMarkers;
-
-    renderStateMarkers("all-zones");
+    renderStateMarkers(initialState);
   }
 
   loadGoogleMapsApi(googleMapsKey).then(async (loaded) => {
