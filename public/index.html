@@ -32,7 +32,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-38D897N597"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag () { dataLayer.push(arguments); }
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-38D897N597', {
@@ -66,9 +66,10 @@
 
 
       <div class="hero-bg">
-        <video poster="./assets/images/Fondo_Javer_1280x720.png" class=" z-0 bg-black"
-          src="./assets/videos/portada-valvento.mp4" muted autoplay loop width="100%"
-          aria-label="Video del desarrollo Valvento"></video>
+        <video poster="./assets/images/Fondo_Javer_1280x720.png" class="z-0 bg-black"
+          src="./assets/videos/javer-queretaro-portada.mp4" muted autoplay loop preload="auto" playsinline width="100%"
+          aria-label="Video del desarrollo Valvento">
+        </video>
         <!-- <img src="./assets/images/Fondo_Javer_1280x720.png" alt="Fondo" /> -->
       </div>
 
@@ -147,7 +148,7 @@
       <div class="container split-layout">
 
         <div class="content-wrap reveal">
-          <p class="eyebrow dark">VIVE EN QUERÉTARO</p>
+          <!-- <p class="eyebrow dark">VIVE EN QUERÉTARO</p> -->
           <h2>El lugar donde comienzan las grandes historias</h2>
           <p>
             Elegir dónde vivir, es elegir el estilo de vida que quieres para ti y tu familia. En Querétaro encontrarás
@@ -1609,7 +1610,7 @@
       }
     };
 
-    function onLoadRecaptcha () {
+    function onLoadRecaptcha() {
       ['1', '2'].forEach((num) => {
         const container = document.getElementById(`recaptcha-${num}`);
         if (!container) return;
@@ -1621,7 +1622,7 @@
       });
     }
 
-    function normalizeText (value) {
+    function normalizeText(value) {
       return (value || '')
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
@@ -1629,7 +1630,7 @@
         .trim();
     }
 
-    function showMessage (messageDiv, type, text) {
+    function showMessage(messageDiv, type, text) {
       messageDiv.classList.remove('alert', 'alert-danger', 'alert-success');
       messageDiv.textContent = text;
       messageDiv.classList.add('alert', type === 'error' ? 'alert-danger' : 'alert-success');
@@ -1642,14 +1643,14 @@
       }
     }
 
-    function getLeadByZonaAndFraccionamiento (zona, fraccionamiento) {
+    function getLeadByZonaAndFraccionamiento(zona, fraccionamiento) {
       if (zona === 'El Marqués') {
         return FRACC_TO_LEAD[fraccionamiento] || '';
       }
       return ZONA_TO_LEAD[zona] || '';
     }
 
-    function updateFraccionamientoVisibility (formId) {
+    function updateFraccionamientoVisibility(formId) {
       const config = FORM_CONFIG[formId];
       if (!config) return;
 
@@ -1667,7 +1668,7 @@
       }
     }
 
-    function applyLeadSelectionToForm (formId, leadValue) {
+    function applyLeadSelectionToForm(formId, leadValue) {
       const config = FORM_CONFIG[formId];
       if (!config) return;
 
@@ -1686,7 +1687,7 @@
       fraccSelect.value = mappedSelection.fraccionamiento;
     }
 
-    function syncLeadInputFromSelectors (formId) {
+    function syncLeadInputFromSelectors(formId) {
       const config = FORM_CONFIG[formId];
       if (!config) return '';
 
@@ -1700,7 +1701,7 @@
       return lead;
     }
 
-    function setupZoneAndFraccionamientoBehavior (formId) {
+    function setupZoneAndFraccionamientoBehavior(formId) {
       const config = FORM_CONFIG[formId];
       if (!config) return;
 
@@ -1722,7 +1723,7 @@
       updateFraccionamientoVisibility(formId);
     }
 
-    function getProjectFromCardTitle (title) {
+    function getProjectFromCardTitle(title) {
       const value = normalizeText(title);
       if (value.includes('valvento')) return 'VALVENTO';
       if (value.includes('marques del rio')) return 'MARQUES DEL RIO';
@@ -1732,16 +1733,16 @@
       return '';
     }
 
-    function getGclidFromUrl () {
+    function getGclidFromUrl() {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get('gclid') || '';
     }
 
-    function setupCardSelectionBehavior () {
+    function setupCardSelectionBehavior() {
       const mount = document.getElementById('dev-state-content');
       if (!mount) return;
 
-      function scrollToSecondForm () {
+      function scrollToSecondForm() {
         const secondForm = document.getElementById('lead-form-2');
         const contactSection = document.getElementById('contacto');
         const header = document.querySelector('.site-header');
