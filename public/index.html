@@ -1598,6 +1598,7 @@
   <script src="./script.js"></script>
 
   <script src="https://www.google.com/recaptcha/api.js?onload=onLoadRecaptcha&render=explicit" async defer></script>
+  <script src="./meta-lead.js"></script>
   <script>
     const recaptchaWidgetIds = {};
     const formIds = ['lead-form-1', 'lead-form-2'];
@@ -1843,8 +1844,14 @@
         form.appendChild(messageDiv);
       }
 
+      const submitGuard = window.MetaLead
+        ? window.MetaLead.createSubmitGuard()
+        : { tryAcquire() { return true; }, release() {} };
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (!submitGuard.tryAcquire()) return;
+
         messageDiv.textContent = '';
         messageDiv.classList.remove('alert', 'alert-danger', 'alert-success');
 
@@ -1932,6 +1939,19 @@
             form_origen: formId
           };
 
+          if (window.MetaLead) {
+            data.event_source_url = window.location.href;
+            const fbp = window.MetaLead.readCookieFromString(document.cookie, '_fbp');
+            const fbclid = new URLSearchParams(window.location.search).get('fbclid') || '';
+            const fbc = window.MetaLead.resolveFbc({
+              fbcCookie: window.MetaLead.readCookieFromString(document.cookie, '_fbc'),
+              fbclid,
+              timestamp: Date.now()
+            });
+            if (fbp) data.fbp = fbp;
+            if (fbc) data.fbc = fbc;
+          }
+
           const configuredBaseUrl = (window.LANDING_API_BASE_URL || '').trim().replace(/\/$/, '');
           const endpoint = configuredBaseUrl ? `${configuredBaseUrl}/enviar` : '/enviar';
 
@@ -1941,10 +1961,14 @@
             body: JSON.stringify(data)
           });
 
+          const result = await response.json().catch(() => ({}));
           if (!response.ok) {
-            const err = await response.json().catch(() => ({}));
-            showMessage(messageDiv, 'error', err.error || 'Error al enviar el formulario.');
+            showMessage(messageDiv, 'error', result.error || 'Error al enviar el formulario.');
             return;
+          }
+
+          if (window.MetaLead) {
+            window.MetaLead.trackLead(typeof fbq === 'function' ? fbq : null, formId, result);
           }
 
           showMessage(messageDiv, 'success', 'Formulario enviado correctamente.');
@@ -1974,6 +1998,7 @@
           console.error('Error:', error);
           showMessage(messageDiv, 'error', 'Error de red o del servidor.');
         } finally {
+          submitGuard.release();
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.classList.remove('disabled');
