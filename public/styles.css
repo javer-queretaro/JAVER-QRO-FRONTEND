@@ -246,6 +246,16 @@ select#hero-fraccionamiento {
   background: var(--brand-primary-strong);
 }
 
+.btn-submit:disabled,
+.hero-form .btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.hero-form .btn-submit:disabled:hover {
+  background: var(--brand-primary);
+}
+
 .eyebrow {
   margin: 0 0 0.6rem;
   letter-spacing: 0.08em;

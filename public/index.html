@@ -1847,10 +1847,11 @@
       const submitGuard = window.MetaLead
         ? window.MetaLead.createSubmitGuard()
         : { tryAcquire() { return true; }, release() {} };
+      let submitted = false;
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (!submitGuard.tryAcquire()) return;
+        if (submitted || !submitGuard.tryAcquire()) return;
 
         messageDiv.textContent = '';
         messageDiv.classList.remove('alert', 'alert-danger', 'alert-success');
@@ -1971,6 +1972,13 @@
             window.MetaLead.trackLead(typeof fbq === 'function' ? fbq : null, formId, result);
           }
 
+          submitted = true;
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('disabled');
+            submitBtn.innerHTML = 'ENVIADO';
+          }
+
           showMessage(messageDiv, 'success', 'Formulario enviado correctamente.');
 
           setTimeout(() => {
@@ -1998,6 +2006,7 @@
           console.error('Error:', error);
           showMessage(messageDiv, 'error', 'Error de red o del servidor.');
         } finally {
+          if (submitted) return;
           submitGuard.release();
           if (submitBtn) {
             submitBtn.disabled = false;
