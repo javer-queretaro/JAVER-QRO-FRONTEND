@@ -61,12 +61,21 @@
     return { eventID: result.event_id, form_name: formName };
   }
 
+  function trackSubmitForm(ttq, formOrigen, result) {
+    if (!ttq || typeof ttq.track !== 'function' || !shouldTrackLead(result)) return null;
+    const formName = formNameFromOrigen(formOrigen);
+    const properties = formName ? { content_name: formName } : {};
+    ttq.track('SubmitForm', properties, { event_id: result.event_id });
+    return { event_id: result.event_id, content_name: formName };
+  }
+
   root.MetaLead = {
     formNameFromOrigen,
     createSubmitGuard,
     readCookieFromString,
     resolveFbc,
     shouldTrackLead,
-    trackLead
+    trackLead,
+    trackSubmitForm
   };
 })(typeof globalThis !== 'undefined' ? globalThis : this);

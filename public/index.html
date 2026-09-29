@@ -1984,6 +1984,7 @@
 
           if (window.MetaLead) {
             window.MetaLead.trackLead(typeof fbq === 'function' ? fbq : null, formId, result);
+            window.MetaLead.trackSubmitForm(window.ttq, formId, result);
           }
 
           submitted = true;
