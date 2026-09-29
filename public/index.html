@@ -1975,8 +1975,8 @@
           submitted = true;
           if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.classList.add('disabled');
-            submitBtn.innerHTML = 'ENVIADO';
+            submitBtn.classList.add('disabled', 'is-sent');
+            submitBtn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Enviado correctamente';
           }
 
           showMessage(messageDiv, 'success', 'Formulario enviado correctamente.');

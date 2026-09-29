@@ -256,6 +256,24 @@ select#hero-fraccionamiento {
   background: var(--brand-primary);
 }
 
+.btn-submit.is-sent,
+.hero-form .btn-submit.is-sent:disabled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  opacity: 1;
+  cursor: default;
+  background: #157347;
+  color: #fff;
+  letter-spacing: 0.4px;
+}
+
+.btn-submit.is-sent:disabled:hover,
+.hero-form .btn-submit.is-sent:disabled:hover {
+  background: #157347;
+}
+
 .eyebrow {
   margin: 0 0 0.6rem;
   letter-spacing: 0.08em;
